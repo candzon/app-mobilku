@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "709716977497",
+    "project_id": "mobilku-6454c",
+    "storage_bucket": "mobilku-6454c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:709716977497:android:f876f176b8402da75b0e48",
+        "android_client_info": {
+          "package_name": "com.example.app_mobil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "709716977497-lrf99q0gv5l7qd88n30gvd8n72vekivl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvqgKY1ogpThVxf0tv6FVkKVqO7RBqPZ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "709716977497-lrf99q0gv5l7qd88n30gvd8n72vekivl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

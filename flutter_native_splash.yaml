@@ -1,0 +1,4 @@
+ flutter_native_splash:
+  image: assets/img/car.png # Replace this with the relative path to your launch image.
+  color: "#FFFFFF"
+  web: false
