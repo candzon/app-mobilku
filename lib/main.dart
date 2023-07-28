@@ -38,13 +38,13 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF2196F3)),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF2196F3)),
         useMaterial3: true,
       ),
       initialRoute: '/splash',
       routes: {
-        '/splash': (context) => SplashScreen(),
-        '/login': (context) => LoginScreen(),
+        '/splash': (context) => const SplashScreen(),
+        '/login': (context) => const LoginScreen(),
         '/home': (context) => const MyHomePage(title: "App Mobilku"),
         // Add more routes for other screens if needed
       },

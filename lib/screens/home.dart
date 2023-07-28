@@ -17,6 +17,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // Add the logout functionality here
     await FirebaseAuth.instance.signOut();
     // After logout and delay, navigate the user back to the login screen
+    // ignore: use_build_context_synchronously
     Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
   }
 
@@ -57,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: CarCrudWidget(), // Replace this with the widget you want to show
+      body: const CarCrudWidget(), // Replace this with the widget you want to show
     );
   }
 }
