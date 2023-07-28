@@ -248,7 +248,7 @@ class _CarFormState extends State<CarForm> {
           ),
         ),
       ),
-      floatingActionButton: Row(
+      floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           if (widget.car != null)
@@ -259,6 +259,7 @@ class _CarFormState extends State<CarForm> {
               backgroundColor: Colors.red,
               child: const Icon(Icons.delete),
             ),
+          const Padding(padding: EdgeInsets.only(bottom: 10)),
           const SizedBox(width: 16),
           FloatingActionButton(
             heroTag: 'saveCarButton',
