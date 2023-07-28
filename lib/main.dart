@@ -1,30 +1,17 @@
+import 'package:app_mobil/dotenv_firebase_options.dart';
 import 'package:app_mobil/screens/home.dart';
 import 'package:app_mobil/screens/login.dart';
 import 'package:app_mobil/screens/splash.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'firebase_options.dart';
+
 
 void main() async {
   // TRY THIS: Try uncommenting the line below to see the splash screen
 
   WidgetsFlutterBinding.ensureInitialized();
   await initializeFirebase();
-  await loadEnvironmentVariables();
 
   runApp(const MyApp());
-}
-
-Future<void> initializeFirebase() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-}
-
-Future<void> loadEnvironmentVariables() async {
-  await dotenv.load(fileName: ".env");
 }
 
 class MyApp extends StatelessWidget {
