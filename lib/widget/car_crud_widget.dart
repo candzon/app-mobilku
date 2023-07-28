@@ -48,7 +48,10 @@ class CarList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('cars').snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('cars')
+            .orderBy('brand', descending: false)
+            .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const CircularProgressIndicator();
@@ -259,7 +262,6 @@ class _CarFormState extends State<CarForm> {
               backgroundColor: Colors.red,
               child: const Icon(Icons.delete),
             ),
-            
           const Padding(padding: EdgeInsets.only(bottom: 10)),
           const SizedBox(width: 16),
           FloatingActionButton(
