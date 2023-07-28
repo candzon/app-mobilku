@@ -1,6 +1,10 @@
 # app_mobil
 
-A new Flutter project.
+Aplikasi crud data mobil
+
+## Flow Project Video
+- [ Video Presentasi ](https://drive.google.com/file/d/1q-UnAWSPNBZ1xLEUO1W0YhhPc64oOU3E/view?usp=sharing)
+
 
 ## Getting Started
 
