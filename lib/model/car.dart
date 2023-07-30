@@ -4,6 +4,7 @@ class Car {
   final String model;
   final String color;
   final int year;
+  final String? imageUrl;
 
   Car({
     required this.id,
@@ -11,5 +12,6 @@ class Car {
     required this.model,
     required this.color,
     required this.year,
+    required this.imageUrl,
   });
 }

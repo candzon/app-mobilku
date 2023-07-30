@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../model/car.dart';
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CarCrudWidget extends StatelessWidget {
   const CarCrudWidget({super.key});
@@ -44,6 +47,14 @@ class CarCrudWidget extends StatelessWidget {
 class CarList extends StatelessWidget {
   const CarList({super.key});
 
+  ImageProvider _getImageProvider(Car car) {
+    if (car.imageUrl != null && car.imageUrl!.isNotEmpty) {
+      return NetworkImage(car.imageUrl!);
+    } else {
+      return const AssetImage('assets/img/image_not_available.jpg');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -69,19 +80,48 @@ class CarList extends StatelessWidget {
                 model: carData['model'] ?? '',
                 color: carData['color'] ?? '',
                 year: carData['year'] ?? 0,
+                imageUrl:
+                    carData['imageUrl'] ?? '', // Fetch imageUrl from Firestore
               );
 
               return Card(
                 elevation: 4,
                 margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 child: ListTile(
-                  title: Column(
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Brand: ${car.brand}'),
-                      Text('Model: ${car.model}'),
-                      Text('Color: ${car.color}'),
-                      Text('Year: ${car.year}'),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Brand: ${car.brand}',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text('Model: ${car.model}'),
+                            Text('Color: ${car.color}'),
+                            Text('Year: ${car.year}'),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: 100,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.circular(12),
+                          image: car.imageUrl!.isNotEmpty
+                              ? DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(car.imageUrl ?? ''),
+                                )
+                              : DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: _getImageProvider(car)),
+                        ),
+                      ),
                     ],
                   ),
                   onTap: () => _navigateToCarForm(context, car),
@@ -119,6 +159,19 @@ class _CarFormState extends State<CarForm> {
   final _modelController = TextEditingController();
   final _colorController = TextEditingController();
   final _yearController = TextEditingController();
+
+  File? _imageFile;
+
+  Future<void> _uploadImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
+    }
+  }
 
   @override
   void initState() {
@@ -164,18 +217,32 @@ class _CarFormState extends State<CarForm> {
     );
   }
 
-  void _saveCar() {
+  Future<void> _saveCar() async {
     if (_formKey.currentState!.validate()) {
       final brand = _brandController.text;
       final model = _modelController.text;
       final color = _colorController.text;
       final year = int.parse(_yearController.text);
 
+      // Upload image to Firebase Storage
+      String imageUrl = '';
+      if (_imageFile != null) {
+        final storageRef = FirebaseStorage.instance
+            .ref()
+            .child('car_images')
+            .child('${DateTime.now().millisecondsSinceEpoch}.jpg');
+
+        final uploadTask = storageRef.putFile(_imageFile!);
+        final taskSnapshot = await uploadTask;
+        imageUrl = await taskSnapshot.ref.getDownloadURL();
+      }
+
       final carData = {
         'brand': brand,
         'model': model,
         'color': color,
         'year': year,
+        'imageUrl': imageUrl,
       };
 
       if (widget.car == null) {
@@ -245,6 +312,19 @@ class _CarFormState extends State<CarForm> {
                     }
                     return null;
                   },
+                ),
+                SizedBox(height: 16),
+                if (_imageFile != null)
+                  Image.file(
+                    _imageFile!,
+                    height: 100,
+                    width: 100,
+                    fit: BoxFit.cover,
+                  ),
+                SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: _uploadImage,
+                  child: Text('Choose Image'),
                 ),
               ],
             ),

@@ -1,8 +1,9 @@
-import 'package:app_mobil/dotenv_firebase_options.dart';
 import 'package:app_mobil/screens/home.dart';
 import 'package:app_mobil/screens/login.dart';
 import 'package:app_mobil/screens/splash.dart';
 import 'package:flutter/material.dart';
+
+import 'dotenv_firebase_options.dart';
 
 
 void main() async {
