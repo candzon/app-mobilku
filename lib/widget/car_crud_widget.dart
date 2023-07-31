@@ -206,8 +206,16 @@ class _CarFormState extends State<CarForm> {
                       .collection('cars')
                       .doc(widget.car!.id)
                       .delete();
+
+                  // Show a snackbar when data is successfully removed
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text("Data berhasil dihapus"),
+                    backgroundColor: Colors.red,
+                  ));
+
                   Navigator.of(context).pop();
                 }
+
                 Navigator.of(context).pop();
               },
             ),
@@ -254,8 +262,25 @@ class _CarFormState extends State<CarForm> {
             .update(carData);
       }
 
+      // Show a snackbar when data is saved
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Data berhasil disimpan"),
+        backgroundColor: Colors.green,
+      ));
+
       Navigator.of(context).pop();
     }
+  }
+
+
+  TextStyle _textStyling(){
+   return TextField.materialMisspelledTextStyle.copyWith(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    height: 1.5,
+                    letterSpacing: 0.15,
+                  );
   }
 
   @override
@@ -275,12 +300,14 @@ class _CarFormState extends State<CarForm> {
                 TextFormField(
                   controller: _brandController,
                   decoration: const InputDecoration(labelText: 'Brand'),
+                  autofocus: true,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter the car brand';
                     }
                     return null;
                   },
+                  style: _textStyling(),
                 ),
                 TextFormField(
                   controller: _modelController,
