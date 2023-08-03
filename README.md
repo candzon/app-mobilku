@@ -2,6 +2,12 @@
 
 ![cover mobilkuapps](https://github.com/candzon/app-mobilku/blob/main/cover/cover.png)
 
+## Feature
+- Splash Screen
+- Login
+- Create, Read, Update and Delete
+- Logout
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
