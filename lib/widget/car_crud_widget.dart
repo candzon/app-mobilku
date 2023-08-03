@@ -272,15 +272,14 @@ class _CarFormState extends State<CarForm> {
     }
   }
 
-
-  TextStyle _textStyling(){
-   return TextField.materialMisspelledTextStyle.copyWith(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    height: 1.5,
-                    letterSpacing: 0.15,
-                  );
+  TextStyle _textStyling() {
+    return TextField.materialMisspelledTextStyle.copyWith(
+      color: Colors.black,
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      height: 1.5,
+      letterSpacing: 0.15,
+    );
   }
 
   @override
@@ -297,21 +296,21 @@ class _CarFormState extends State<CarForm> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextFormField(
+                _buildCircularTextFormField(
                   controller: _brandController,
-                  decoration: const InputDecoration(labelText: 'Brand'),
-                  autofocus: true,
+                  labelText: 'Brand',
+                  autoFocus: true,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter the car brand';
                     }
                     return null;
                   },
-                  style: _textStyling(),
                 ),
-                TextFormField(
+                SizedBox(height: 16), // Jarak ke bawah
+                _buildCircularTextFormField(
                   controller: _modelController,
-                  decoration: const InputDecoration(labelText: 'Model'),
+                  labelText: 'Model',
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter the car model';
@@ -319,9 +318,10 @@ class _CarFormState extends State<CarForm> {
                     return null;
                   },
                 ),
-                TextFormField(
+                SizedBox(height: 16), // Jarak ke bawah
+                _buildCircularTextFormField(
                   controller: _colorController,
-                  decoration: const InputDecoration(labelText: 'Color'),
+                  labelText: 'Color',
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter the car color';
@@ -329,9 +329,10 @@ class _CarFormState extends State<CarForm> {
                     return null;
                   },
                 ),
-                TextFormField(
+                SizedBox(height: 16), // Jarak ke bawah
+                _buildCircularTextFormField(
                   controller: _yearController,
-                  decoration: const InputDecoration(labelText: 'Year'),
+                  labelText: 'Year',
                   keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -378,6 +379,31 @@ class _CarFormState extends State<CarForm> {
             child: const Icon(Icons.save),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildCircularTextFormField({
+    required TextEditingController controller,
+    required String labelText,
+    bool autoFocus = false,
+    TextInputType? keyboardType,
+    FormFieldValidator<String>? validator,
+  }) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(25),
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: labelText,
+          border: InputBorder.none,
+          filled: true,
+          fillColor: Colors.grey[200],
+          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        ),
+        autofocus: autoFocus,
+        keyboardType: keyboardType,
+        validator: validator,
       ),
     );
   }
