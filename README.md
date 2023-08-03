@@ -1,6 +1,6 @@
-# app_mobil
+# app_mobilku
 
-Aplikasi crud data mobil
+![cover mobilkuapps](https://github.com/candzon/app-mobilku/blob/main/cover/cover.png)
 
 ## Getting Started
 
